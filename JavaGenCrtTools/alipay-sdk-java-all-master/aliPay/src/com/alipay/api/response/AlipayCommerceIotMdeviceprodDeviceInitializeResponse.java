@@ -1,0 +1,30 @@
+package com.alipay.api.response;
+
+import com.alipay.api.internal.mapping.ApiField;
+
+import com.alipay.api.AlipayResponse;
+
+/**
+ * ALIPAY API: alipay.commerce.iot.mdeviceprod.device.initialize response.
+ * 
+ * @author auto create
+ * @since 1.0, 2019-09-16 16:57:09
+ */
+public class AlipayCommerceIotMdeviceprodDeviceInitializeResponse extends AlipayResponse {
+
+	private static final long serialVersionUID = 1462122386247343941L;
+
+	/** 
+	 * 设备唯一标识
+	 */
+	@ApiField("biz_tid")
+	private String bizTid;
+
+	public void setBizTid(String bizTid) {
+		this.bizTid = bizTid;
+	}
+	public String getBizTid( ) {
+		return this.bizTid;
+	}
+
+}

@@ -1,0 +1,73 @@
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.internal.util.AntCertificationUtil;
+import com.alipay.api.request.AlipayFundTransUniTransferRequest;
+import com.alipay.api.response.AlipayFundTransUniTransferResponse;
+
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.security.Security;
+
+public class Main
+{
+	
+    public static void main( String[] args )
+    {
+    	Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+        /*try
+        {
+
+            System.out.println( "app_cert_sn=" + AlipaySignature.getCertSN( "D:/crt/appCertPublicKey.crt" ) );
+
+            System.out.println( "alipay_cert_sn=" + AlipaySignature.getCertSNgetAlipayPublicKey( "D:/crt/alipayCertPublicKey_RSA2.crt" ) );
+        }
+        catch( AlipayApiException e )
+        {
+
+        }
+
+        try
+        {
+            String rootCertContent = FileUtils.readFileToString( new File( "D:/crt/alipayRootCert.crt" ), "UTF-8" );
+            System.out.println( "alipay_root_cert_sn=" + AntCertificationUtil.getRootCertSN( rootCertContent, "SM2" ) );
+        }
+        catch( IOException e1 )
+        {
+            e1.printStackTrace();
+        }*/
+    	AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do","app_id","your private_key","json","GBK","alipay_public_key","RSA2");
+    	AlipayFundTransUniTransferRequest request = new AlipayFundTransUniTransferRequest();
+    	request.setBizContent("{" +
+    	"\"out_biz_no\":\"201806300001\"," +
+    	"\"trans_amount\":23.00," +
+    	"\"product_code\":\"TRANS_ACCOUNT_NO_PWD\"," +
+    	"\"biz_scene\":\"DIRECT_TRANSFER\"," +
+    	"\"order_title\":\"转账标题\"," +
+    	"\"original_order_id\":\"20190620110075000006640000063056\"," +
+    	"\"payee_info\":{" +
+    	"\"identity\":\"208812*****41234\"," +
+    	"\"identity_type\":\"ALIPAY_USER_ID\"," +
+    	"\"name\":\"黄龙国际有限公司\"" +
+    	"    }," +
+    	"\"remark\":\"单笔转账\"," +
+    	"\"business_params\":\"{\\\"sub_biz_scene\\\":\\\"REDPACKET\\\"}\"" +
+    	"  }");
+    	AlipayFundTransUniTransferResponse response;
+		try {
+			response = alipayClient.execute(request);
+			if(response.isSuccess()){
+		    	System.out.println("调用成功");
+		    	} else {
+		    	System.out.println("调用失败");
+		    	}
+		} catch (AlipayApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+}

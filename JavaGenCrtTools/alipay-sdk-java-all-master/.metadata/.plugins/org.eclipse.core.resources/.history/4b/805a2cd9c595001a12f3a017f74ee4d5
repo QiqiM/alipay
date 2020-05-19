@@ -1,0 +1,123 @@
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.CertAlipayRequest;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.internal.util.AntCertificationUtil;
+import com.alipay.api.request.AlipayFundTransUniTransferRequest;
+import com.alipay.api.request.AlipayTradeAppPayRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
+import com.alipay.api.response.AlipayFundTransUniTransferResponse;
+import com.alipay.api.response.AlipayTradeQueryResponse;
+
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.security.Security;
+
+public class Main
+{
+	
+    public static void main( String[] args )
+    {
+    	Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+        /*try
+        {
+
+            System.out.println( "app_cert_sn=" + AlipaySignature.getCertSN( "D:/crt/appCertPublicKey.crt" ) );
+
+            System.out.println( "alipay_cert_sn=" + AlipaySignature.getCertSNgetAlipayPublicKey( "D:/crt/alipayCertPublicKey_RSA2.crt" ) );
+        }
+        catch( AlipayApiException e )
+        {
+
+        }
+
+        try
+        {
+            String rootCertContent = FileUtils.readFileToString( new File( "D:/crt/alipayRootCert.crt" ), "UTF-8" );
+            System.out.println( "alipay_root_cert_sn=" + AntCertificationUtil.getRootCertSN( rootCertContent, "SM2" ) );
+        }
+        catch( IOException e1 )
+        {
+            e1.printStackTrace();
+        }*/
+    	
+		try {
+			String appId = "2021001161693315";
+	    	String privateKey = FileUtils.readFileToString( new File( "D:/crt/privateKey.txt" ), "UTF-8" );
+	    	System.out.println(privateKey);
+	    	String alipay_public_key = FileUtils.readFileToString( new File( "D:/crt/publicKey.txt" ), "UTF-8" );
+	    	//构造client
+//			CertAlipayRequest certAlipayRequest = new CertAlipayRequest();
+//			//设置网关地址
+//			certAlipayRequest.setServerUrl("https://openapi.alipay.com/gateway.do");
+//			//设置应用Id
+//			certAlipayRequest.setAppId(appId);
+//			//设置应用私钥
+//			certAlipayRequest.setPrivateKey(privateKey);
+//			//设置请求格式，固定值json
+//			certAlipayRequest.setFormat("json");
+//			//设置字符集
+//			certAlipayRequest.setCharset("utf-8");
+//			//设置签名类型
+//			certAlipayRequest.setSignType("RSA2");
+//			//设置应用公钥证书路径
+//			certAlipayRequest.setCertPath("d:/crt/appCertPublicKey_2021001161693315.crt");
+//			//设置支付宝公钥证书路径
+//			certAlipayRequest.setAlipayPublicCertPath("d:/crt/alipayCertPublicKey_RSA2.crt");
+//			//设置支付宝根证书路径
+//			certAlipayRequest.setRootCertPath("d:/crt/alipayRootCert.crt");
+//			//构造client
+//			AlipayClient alipayClient = new DefaultAlipayClient(certAlipayRequest);
+//			//构造API请求
+//			AlipayFundTransUniTransferRequest request = new AlipayFundTransUniTransferRequest();
+//			request.setBizContent("{\"out_biz_no\":\"1515614331202005110000000252\","
+//					+ "\"trans_amount\":0.01,"
+//					+ "\"product_code\":\"STD_RED_PACKET\","
+//					+ "\"biz_scene\":\"DIRECT_TRANSFER\","
+//					+ "\"order_title\":\"《喵喵黄金屋》现金红包\","
+//					+ "\"payee_info\":{\"identity\":\"15005058031\",\"identity_type\":\"ALIPAY_LOGON_ID\"}}");
+//			//发送请求
+//			AlipayFundTransUniTransferResponse response = alipayClient.certificateExecute(request);
+//			if(response.isSuccess()){
+//		    	System.out.println("调用成功");
+//		    	} else {
+//		    	System.out.println("调用失败");
+//		    	}
+	    	
+	    	
+	    	AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do",appId, privateKey,"json","GBK",alipay_public_key,"RSA2");
+	    	AlipayFundTransUniTransferRequest request = new AlipayFundTransUniTransferRequest();
+	    	request.setBizContent("{" +
+	    	"\"out_biz_no\":\"201806300001\"," +
+	    	"\"trans_amount\":0.01," +
+	    	"\"product_code\":\"TRANS_ACCOUNT_NO_PWD\"," +
+	    	"\"biz_scene\":\"DIRECT_TRANSFER\"," +
+	    	"\"order_title\":\"转账标题\"," +
+	    	"\"original_order_id\":\"20190620110075000006640000063056\"," +
+	    	"\"payee_info\":{" +
+	    	"\"identity\":\"208812*****41234\"," +
+	    	"\"identity_type\":\"ALIPAY_LOGON_ID\"," +
+	    	"\"name\":\"黄龙国际有限公司\"" +
+	    	"    }," +
+	    	"\"remark\":\"单笔转账\"," +
+	    	"\"business_params\":\"{\\\"sub_biz_scene\\\":\\\"REDPACKET\\\"}\"" +
+	    	"  }");
+	    	AlipayFundTransUniTransferResponse response = alipayClient.execute(request);
+	    	if(response.isSuccess()){
+	    	System.out.println("调用成功");
+	    	} else {
+	    	System.out.println("调用失败");
+	    	}
+		} catch (AlipayApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+}

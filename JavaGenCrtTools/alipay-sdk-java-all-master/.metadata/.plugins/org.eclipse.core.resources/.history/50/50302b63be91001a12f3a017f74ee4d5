@@ -1,0 +1,36 @@
+package aliPayTest;
+
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.request.AlipayFundTransUniTransferRequest;
+
+public class aliPay {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do","app_id","your private_key","json","GBK","alipay_public_key","RSA2");
+		AlipayFundTransUniTransferRequest request = new AlipayFundTransUniTransferRequest();
+		request.setBizContent("{" +
+		"\"out_biz_no\":\"201806300001\"," +
+		"\"trans_amount\":23.00," +
+		"\"product_code\":\"TRANS_ACCOUNT_NO_PWD\"," +
+		"\"biz_scene\":\"DIRECT_TRANSFER\"," +
+		"\"order_title\":\"转账标题\"," +
+		"\"original_order_id\":\"20190620110075000006640000063056\"," +
+		"\"payee_info\":{" +
+		"\"identity\":\"208812*****41234\"," +
+		"\"identity_type\":\"ALIPAY_USER_ID\"," +
+		"\"name\":\"黄龙国际有限公司\"" +
+		"    }," +
+		"\"remark\":\"单笔转账\"," +
+		"\"business_params\":\"{\\\"sub_biz_scene\\\":\\\"REDPACKET\\\"}\"" +
+		"  }");
+		AlipayFundTransUniTransferResponse response = alipayClient.execute(request);
+		if(response.isSuccess()){
+		System.out.println("调用成功");
+		} else {
+		System.out.println("调用失败");
+		}
+	}
+
+}

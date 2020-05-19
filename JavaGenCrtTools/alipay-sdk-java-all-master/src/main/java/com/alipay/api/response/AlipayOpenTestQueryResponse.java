@@ -1,0 +1,30 @@
+package com.alipay.api.response;
+
+import com.alipay.api.internal.mapping.ApiField;
+
+import com.alipay.api.AlipayResponse;
+
+/**
+ * ALIPAY API: alipay.open.test.query response.
+ * 
+ * @author auto create
+ * @since 1.0, 2020-01-02 11:03:46
+ */
+public class AlipayOpenTestQueryResponse extends AlipayResponse {
+
+	private static final long serialVersionUID = 7622224597436177172L;
+
+	/** 
+	 * 用户类型
+	 */
+	@ApiField("user_type")
+	private String userType;
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public String getUserType( ) {
+		return this.userType;
+	}
+
+}

@@ -1,0 +1,11 @@
+.idea
+.DS_Store
+target
+*.iml
+*.ipr
+*.iws
+
+sdkSource/alipay-sdk-java-sources.zip
+sdkSource/alipay-sdk-java-sources
+publish/alipay-sdk-java-all
+publish/alipay-sdk-JAVA-*.zip
