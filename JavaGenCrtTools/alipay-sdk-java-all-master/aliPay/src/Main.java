@@ -51,29 +51,29 @@ public class Main
 	    	
 	    	System.out.println("==============");
 	    	String alipay_public_key = FileUtils.readFileToString( new File( "D:/crt/publicKey.txt" ), "UTF-8" );
-	    	//閺嬪嫰锟界嚲lient
+	    	//构造client
 			CertAlipayRequest certAlipayRequest = new CertAlipayRequest();
-			//鐠佸墽鐤嗙純鎴濆彠閸︽澘娼�
+			//设置网关地址
 			certAlipayRequest.setServerUrl("https://openapi.alipay.com/gateway.do");
-			//鐠佸墽鐤嗘惔鏃傛暏Id
+			//设置应用Id
 			certAlipayRequest.setAppId(appId);
-			//鐠佸墽鐤嗘惔鏃傛暏缁変線鎸�
+			//设置应用私钥
 			certAlipayRequest.setPrivateKey(privateKey);
-			//鐠佸墽鐤嗙拠閿嬬湴閺嶇厧绱￠敍灞芥祼鐎规艾锟界澈son
+			//设置请求格式，固定值json
 			certAlipayRequest.setFormat("json");
-			//鐠佸墽鐤嗙�涙顑侀梿锟�
+			//设置字符集
 			certAlipayRequest.setCharset("UTF-8");
-			//鐠佸墽鐤嗙粵鎯ф倳缁鐎�
+			//设置支付宝公钥证书路径
 			certAlipayRequest.setSignType("RSA2");
-			//鐠佸墽鐤嗘惔鏃傛暏閸忣剟鎸滅拠浣峰姛鐠侯垰绶�
+			//设置支付宝根证书路径
 			certAlipayRequest.setCertPath("d:/crt/appCertPublicKey_2021001161693315.crt");
-			//鐠佸墽鐤嗛弨顖欑帛鐎规繂鍙曢柦銉ㄧ槈娑旓箒鐭惧锟�
+			//设置支付宝公钥证书路径
 			certAlipayRequest.setAlipayPublicCertPath("d:/crt/alipayCertPublicKey_RSA2.crt");
-			//鐠佸墽鐤嗛弨顖欑帛鐎规繃鐗寸拠浣峰姛鐠侯垰绶�
+			//设置支付宝根证书路径
 			certAlipayRequest.setRootCertPath("d:/crt/alipayRootCert.crt");
-			//閺嬪嫰锟界嚲lient
+			//构造client
 			AlipayClient alipayClient = new DefaultAlipayClient(certAlipayRequest);
-			//閺嬪嫰锟界嚄PI鐠囬攱鐪�
+			//构造API请求
 			AlipayFundTransUniTransferRequest request = new AlipayFundTransUniTransferRequest();
 			request.setBizContent("{\"out_biz_no\":\"151561433120200210000000255\","
 					+ "\"trans_amount\":0.01,"
@@ -81,7 +81,7 @@ public class Main
 					+ "\"biz_scene\":\"DIRECT_TRANSFER\","
 					+ "\"order_title\":\"喵喵黄金屋\","
 					+ "\"business_params\":\"{\\\"sub_biz_scene\\\":\\\"REDPACKET\\\"}\"," 
-					+ "\"payee_info\":{\"identity\":\"2088612645582032\",\"identity_type\":\"ALIPAY_USER_ID\"}}");
+					+ "\"payee_info\":{\"identity\":\"2088612*****82032\",\"identity_type\":\"ALIPAY_USER_ID\"}}");
 			
 			//返回值
 			AlipayFundTransUniTransferResponse response = alipayClient.certificateExecute(request);
